@@ -4,10 +4,17 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
         List<Contact> contactList = new ArrayList<>();
+
         System.out.println("-----------------------------");
         System.out.println("Welcome to the contact list");
+
+        DisplayMenu(scanner, contactList);
+    }
+
+    static void DisplayMenu(Scanner scanner, List<Contact> contactList ){
         boolean showMenu = true;
 
         while (showMenu){
@@ -45,9 +52,14 @@ public class Main {
     }
 
     static void ShowAllContacts(List<Contact> contactList){
+
+        System.out.println("Full contacts list: ");
         for (Contact contact: contactList){
             System.out.println(contact.showInfo());
         }
+
+        System.out.print("\n");
+
     }
 
     static void AddContact(Scanner scanner, List<Contact> contactList){
@@ -64,6 +76,9 @@ public class Main {
 
         Contact newContact = new Contact(name, email, phoneNumber);
         contactList.add(newContact);
+
+        System.out.println("Contact added\n");
+
     }
 
     static void SearchContactByName(Scanner scanner, List<Contact> contactList){
@@ -72,13 +87,18 @@ public class Main {
         System.out.print("Name: ");
         String contactName = scanner.nextLine();
 
+        boolean contactFound = false;
         for (Contact contact: contactList){
             if (contact.getName().contains(contactName)){
-                System.out.println("Contact found: ");
+                if (!contactFound){
+                    System.out.println("Contact found: ");
+                }
                 System.out.println(contact.showInfo());
-                return;
+                contactFound = true;
             }
         }
+        System.out.print("\n");
+        if (contactFound) return;
         System.out.println("Contact not found");
     }
 
@@ -94,7 +114,7 @@ public class Main {
         int contactIndex = scanner.nextInt() - 1;
         if (contactList.get(contactIndex) != null){
             contactList.remove(contactIndex);
-            return;
+            System.out.println("Contact deleted\n");
         }
 
     }
